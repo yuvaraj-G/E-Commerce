@@ -32,7 +32,7 @@ public class AuthController {
     private final JwtUtils jwtUtils;
 
     public static final String TOKEN_PREFIX = "Bearer";
-    public static final String HEADER_STRING = "Authorizatoin";
+    public static final String HEADER_STRING = "Authorization";
 
     @PostMapping("/authenticate")
     public void createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest, HttpServletResponse response) throws IOException, JSONException {

@@ -22,21 +22,16 @@ public class WebSecurityConfiguration {
     private final JwtRequestFilter authFilter;
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
-                .csrf()
-                .disable()
-                .authrizeHttpRequests()
-                .requestMatchers("/authenticate", "/sign-up", "/order/**")
-                .permitAll()
-                .and()
-                .authrizeHttpRequests()
-                .requestMatchers("/api/**")
-                .authenticated()
-                .and()
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
+                .csrf(csrf -> csrf.disable())
+                .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers("/authenticate", "/sign-up", "/order/**")
+                        .permitAll()
+                        .requestMatchers("/api/**")
+                        .authenticated()
+                )
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }

@@ -2,7 +2,7 @@ package com.example.ecommerceApp.services.jwt;
 
 import com.example.ecommerceApp.entity.User;
 import com.example.ecommerceApp.repository.UserRepository;
-import org.hibernate.annotations.Audited;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -14,7 +14,7 @@ import java.util.Optional;
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    @Audited
+    @Autowired
     private UserRepository userRepository;
 
     @Override

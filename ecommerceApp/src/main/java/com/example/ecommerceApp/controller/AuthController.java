@@ -1,13 +1,18 @@
 package com.example.ecommerceApp.controller;
 
 import com.example.ecommerceApp.dto.AuthenticationRequest;
+import com.example.ecommerceApp.dto.SignUpRequest;
+import com.example.ecommerceApp.dto.UserDto;
 import com.example.ecommerceApp.entity.User;
 import com.example.ecommerceApp.repository.UserRepository;
+import com.example.ecommerceApp.services.auth.AuthService;
 import com.example.ecommerceApp.utils.JwtUtils;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -34,6 +39,8 @@ public class AuthController {
     public static final String TOKEN_PREFIX = "Bearer";
     public static final String HEADER_STRING = "Authorization";
 
+    private final AuthService authService;
+
     @PostMapping("/authenticate")
     public void createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest, HttpServletResponse response) throws IOException, JSONException {
         try {
@@ -55,5 +62,14 @@ public class AuthController {
 
             response.addHeader(HEADER_STRING, TOKEN_PREFIX + jwt);
         }
+    }
+
+    @PostMapping("/sign-up")
+    public ResponseEntity<?> signUpUSer(@RequestBody SignUpRequest signUpRequest) {
+        if (authService.hasUserWithEmail(signUpRequest.getEmail())) {
+            return new ResponseEntity<>("User already exists", HttpStatus.NOT_ACCEPTABLE);
+        }
+        UserDto userDto = authService.createUser(signUpRequest);
+        return new ResponseEntity<>(userDto, HttpStatus.OK);
     }
 }

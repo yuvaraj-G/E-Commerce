@@ -1,14 +1,43 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { map } from 'rxjs';
+import { UserStorageService } from './storage/user-storage.service';
 const BASE_URL = 'http://localhost:8080/';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private userStorageService: UserStorageService) { }
 
   signup(userData: any) {
     return this.http.post(`${BASE_URL}sign-up`, userData);
   }
+  login(username: string, password: string): any {
+  const headers = new HttpHeaders().set('Content-Type', 'application/json');
+  const body = { username, password };
+
+  return this.http
+    .post(BASE_URL + 'authenticate', body, {
+      headers,
+      observe: 'response'
+    })
+    .pipe(
+      map((res) => {
+        console.log('Login response:', res);
+        const token = res.headers.get('authorization')?.substring(7);
+        console.log('token:', token);
+        const user = res.body;
+        console.log('user:', user);
+
+        if (token && user) {
+          this.userStorageService.saveToken(token);
+          this.userStorageService.saveUser(user);
+          return true;
+        }
+
+        return false;
+      })
+    );
+}
 }

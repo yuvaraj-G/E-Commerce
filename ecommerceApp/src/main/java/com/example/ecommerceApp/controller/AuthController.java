@@ -25,6 +25,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -67,9 +69,14 @@ public class AuthController {
     @PostMapping("/sign-up")
     public ResponseEntity<?> signUpUSer(@RequestBody SignUpRequest signUpRequest) {
         if (authService.hasUserWithEmail(signUpRequest.getEmail())) {
-            return new ResponseEntity<>("User already exists", HttpStatus.NOT_ACCEPTABLE);
+            Map<String, Object> resp = new HashMap<>();
+            resp.put("message", "User already exists");
+            return new ResponseEntity<>(resp, HttpStatus.NOT_ACCEPTABLE);
         }
         UserDto userDto = authService.createUser(signUpRequest);
-        return new ResponseEntity<>(userDto, HttpStatus.OK);
+        Map<String, Object> resp = new HashMap<>();
+        resp.put("message", "Successfully signed up");
+        resp.put("user", userDto);
+        return new ResponseEntity<>(resp, HttpStatus.OK);
     }
 }

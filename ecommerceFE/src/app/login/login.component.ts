@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
+import { UserStorageService } from '../services/storage/user-storage.service';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +18,9 @@ export class LoginComponent implements OnInit {
       private formBuilder: FormBuilder,
       private snackBar: MatSnackBar,
       private router: Router,
-      private authService: AuthService,) { }
+      private authService: AuthService,
+      private userStorageService: UserStorageService
+    ) { }
 
   ngOnInit(): void {
       this.loginForm = this.formBuilder.group({
@@ -33,15 +36,19 @@ export class LoginComponent implements OnInit {
     const password = this.loginForm.get('password')?.value;
     this.authService.login(username, password).subscribe(
       (res: any) => {
-        console.log('Login successful:', res);
         this.snackBar.open('Login successful', 'Close', {
           duration: 3000,
           panelClass: ['success-snackbar']
         });
-        this.router.navigate(['/customer']);
+        console.log('Login successful:', res);
+        console.log('this.userStorageService.isAdminLoggedIn()', this.userStorageService.isAdminLoggedIn());
+        if (this.userStorageService.isAdminLoggedIn()) {
+          this.router.navigate(['/admin/dashboard']);
+        } else {
+          this.router.navigate(['/customer/dashboard']);
+        }
       },
       (error: any) => {
-        console.error('Login failed:', error);
         this.snackBar.open('Login failed', 'Close', {
           duration: 3000,
           panelClass: ['error-snackbar']

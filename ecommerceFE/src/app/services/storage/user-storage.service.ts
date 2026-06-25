@@ -33,7 +33,40 @@ export class UserStorageService {
     return null;
   }
 
-  public clear(): void {
-    window.localStorage.clear();
+  public getUserRole() {
+    const user = this.getUser();
+    if(user == null) {
+      return '';
+    }
+    return user.role;
+  }
+
+  public getUserId() {
+    const user = this.getUser();
+    if(user == null) {
+      return '';
+    }
+    return user.id;
+  }
+
+  public isAdminLoggedIn(): boolean {
+    const user = this.getUser();
+    if(user == null) {
+      return false;
+    }
+    return user.role === 'ADMIN';
+  }
+
+  public isCustomerLoggedIn(): boolean {
+    const user = this.getUser();
+    if(user == null) {
+      return false;
+    }
+    return user.role === 'CUSTOMER';
+  }
+
+  public signOut(): void {
+    window.localStorage.removeItem(TOKEN);
+    window.localStorage.removeItem(USER);
   }
 }

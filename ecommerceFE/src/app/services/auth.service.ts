@@ -24,11 +24,8 @@ export class AuthService {
     })
     .pipe(
       map((res) => {
-        console.log('Login response:', res);
         const token = res.headers.get('authorization')?.substring(7);
-        console.log('token:', token);
         const user = res.body;
-        console.log('user:', user);
 
         if (token && user) {
           this.userStorageService.saveToken(token);

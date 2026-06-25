@@ -6,6 +6,8 @@ import com.example.ecommerceApp.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CategoryServiceImpl implements CategoryService {
 
@@ -20,4 +22,7 @@ public class CategoryServiceImpl implements CategoryService {
         return categoryRepository.save(category);
     }
 
+    public List<Category> getAllCategory() {
+        return categoryRepository.findAll();
+    }
 }

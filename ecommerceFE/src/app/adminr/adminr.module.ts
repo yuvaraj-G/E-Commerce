@@ -4,16 +4,30 @@ import { CommonModule } from '@angular/common';
 import { AdminrRoutingModule } from './adminr-routing.module';
 import { AdminrComponent } from './adminr.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { PostCategoryComponent } from './components/post-category/post-category.component';
+import { HttpClientModule } from '@angular/common/http';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatButtonModule } from '@angular/material/button';
 
 
 @NgModule({
   declarations: [
     AdminrComponent,
-    DashboardComponent
+    DashboardComponent,
+    PostCategoryComponent
   ],
   imports: [
     CommonModule,
-    AdminrRoutingModule
+    AdminrRoutingModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSnackBarModule,
+    MatButtonModule
   ]
 })
 export class AdminrModule { }

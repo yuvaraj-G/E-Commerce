@@ -1,6 +1,6 @@
 package com.example.ecommerceApp.controller.admin;
 
-import com.example.ecommerceApp.dto.CatergoryDto;
+import com.example.ecommerceApp.dto.CategoryDto;
 import com.example.ecommerceApp.entity.Category;
 import com.example.ecommerceApp.services.admin.category.CategoryService;
 import lombok.RequiredArgsConstructor;
@@ -18,12 +18,12 @@ public class AdminCategoryController {
     private final CategoryService categoryService;
 
     @PostMapping("category")
-    public ResponseEntity<Category> createCategory(@RequestBody CatergoryDto catergoryDto) {
-        Category category = categoryService.createCategory(catergoryDto);
+    public ResponseEntity<Category> createCategory(@RequestBody CategoryDto categoryDto) {
+        Category category = categoryService.createCategory(categoryDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(category);
     }
 
-    @GetMapping("")
+    @GetMapping("category")
     public ResponseEntity<List<Category>> getAllCategory() {
         return ResponseEntity.ok(categoryService.getAllCategory());
     }

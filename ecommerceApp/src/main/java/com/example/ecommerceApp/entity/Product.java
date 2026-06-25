@@ -1,5 +1,6 @@
 package com.example.ecommerceApp.entity;
 
+import com.example.ecommerceApp.dto.ProductDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -25,4 +26,15 @@ public class Product {
     @JsonIgnore
     private Category category;
 
+    public ProductDto getDto() {
+        ProductDto productDto = new ProductDto();
+        productDto.setId(id);
+        productDto.setName(name);
+        productDto.setPrice(price);
+        productDto.setDescription(description);
+        productDto.setByteImg(img);
+        productDto.setCategoryId(category.getId());
+
+        return productDto;
+    }
 }

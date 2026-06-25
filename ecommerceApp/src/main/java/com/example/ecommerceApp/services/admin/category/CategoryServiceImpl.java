@@ -1,6 +1,6 @@
 package com.example.ecommerceApp.services.admin.category;
 
-import com.example.ecommerceApp.dto.CatergoryDto;
+import com.example.ecommerceApp.dto.CategoryDto;
 import com.example.ecommerceApp.entity.Category;
 import com.example.ecommerceApp.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +14,10 @@ public class CategoryServiceImpl implements CategoryService {
     @Autowired
     private CategoryRepository categoryRepository;
 
-    public Category createCategory(CatergoryDto catergoryDto) {
+    public Category createCategory(CategoryDto categoryDto) {
         Category category = new Category();
-        category.setName(catergoryDto.getName());
-        category.setDescription(catergoryDto.getDescription());
+        category.setName(categoryDto.getName());
+        category.setDescription(categoryDto.getDescription());
 
         return categoryRepository.save(category);
     }

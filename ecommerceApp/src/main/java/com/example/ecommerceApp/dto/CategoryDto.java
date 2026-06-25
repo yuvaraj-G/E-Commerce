@@ -4,7 +4,7 @@ import jakarta.persistence.Lob;
 import lombok.Data;
 
 @Data
-public class CatergoryDto {
+public class CategoryDto {
     private String name;
     @Lob
     private String description;

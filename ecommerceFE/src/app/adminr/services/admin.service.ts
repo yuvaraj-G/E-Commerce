@@ -20,4 +20,16 @@ export class AdminService {
     return this.http.post(`${BASE_URL}api/admin/category`, categoryData, { headers: this.getAuthHeaders() });
   }
 
+  getAllCategories() {
+    return this.http.get(`${BASE_URL}api/admin/category`, { headers: this.getAuthHeaders() });
+  } 
+
+  addProduct(productData: any) {
+    return this.http.post(`${BASE_URL}api/admin/product`, productData, { headers: this.getAuthHeaders() });
+  }
+
+  getAllProducts() {
+    return this.http.get(`${BASE_URL}api/admin/product`, { headers: this.getAuthHeaders() });
+  }
+
 }

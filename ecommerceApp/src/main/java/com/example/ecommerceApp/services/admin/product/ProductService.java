@@ -8,4 +8,6 @@ import java.util.List;
 public interface ProductService {
     public ProductDto addProduct(ProductDto productDto) throws IOException;
     public List<ProductDto> getAllProducts();
+    public List<ProductDto> findAllProductByname(String name);
+    public Boolean deleteProduct(Long id);
 }

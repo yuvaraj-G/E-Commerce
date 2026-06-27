@@ -14,6 +14,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { PostProductComponent } from './components/post-product/post-product.component';
 import {MatSelectModule} from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
+import {MatCardModule} from '@angular/material/card';
+import {MatDividerModule} from '@angular/material/divider';
 
 
 @NgModule({
@@ -34,6 +36,8 @@ import { MatIconModule } from '@angular/material/icon';
     MatButtonModule,
     MatSelectModule,
     MatIconModule,
+    MatCardModule,
+    MatDividerModule
   ]
 })
 export class AdminrModule { }

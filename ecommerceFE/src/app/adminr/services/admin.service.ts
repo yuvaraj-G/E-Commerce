@@ -32,4 +32,11 @@ export class AdminService {
     return this.http.get(`${BASE_URL}api/admin/product`, { headers: this.getAuthHeaders() });
   }
 
+  getProductsByName(name: string) {
+    return this.http.get(`${BASE_URL}api/admin/search/${name}`, { headers: this.getAuthHeaders() });
+  }
+
+  deleteProduct(productId: number) {
+    return this.http.delete<{ message: string }>(`${BASE_URL}api/admin/product/${productId}`, { headers: this.getAuthHeaders() });
+  }
 }

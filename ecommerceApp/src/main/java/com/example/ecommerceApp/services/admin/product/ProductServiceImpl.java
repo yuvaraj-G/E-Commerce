@@ -7,9 +7,11 @@ import com.example.ecommerceApp.repository.CategoryRepository;
 import com.example.ecommerceApp.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -20,6 +22,7 @@ public class ProductServiceImpl implements ProductService{
     @Autowired
     private CategoryRepository categoryRepository;
 
+    @Transactional
     public ProductDto addProduct(ProductDto productDto) throws IOException {
         Product product = new Product();
         product.setName(productDto.getName());
@@ -34,8 +37,26 @@ public class ProductServiceImpl implements ProductService{
         return productRepository.save(product).getDto();
     }
 
+    @Transactional(readOnly = true)
     public List<ProductDto> getAllProducts() {
         List<Product> products = productRepository.findAll();
         return products.stream().map(Product::getDto).collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public List<ProductDto> findAllProductByname(String name) {
+        List<Product> products = productRepository.findAllByNameContaining(name);
+        return products.stream().map(Product::getDto).collect(Collectors.toList());
+    }
+
+    @Transactional
+    public Boolean deleteProduct(Long id) {
+        Optional<Product> optionalProduct = productRepository.findById(id);
+
+        if (optionalProduct.isPresent()) {
+            productRepository.deleteById(id);
+            return true;
+        }
+        return false;
     }
 }
